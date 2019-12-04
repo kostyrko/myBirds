@@ -34,6 +34,7 @@ xcoordinates = IntVar()
 ycoordinates = IntVar()
 notes = StringVar()
 author = StringVar()
+status = StringVar()
 
 # ================ FRAMES ================
 
@@ -41,15 +42,17 @@ Left = Frame(root, width=400, height=300)
 Left.pack(side=LEFT, fill=BOTH)
 Right = Frame(root, width=1200, height=800, bd=8, relief=RAISED)
 Right.pack(side=LEFT)
-Forms1 = Frame(Left, width=400, height=550)
+Forms1 = Frame(Left, width=200, height=550)
 Forms1.pack(side=TOP)
-Forms2 = Frame(Left, width=400, height=550)
+Forms2 = Frame(Left, width=200, height=550)
 Forms2.pack(side=TOP)
-Forms3 = Frame(Left, width=400, height=550)
+Forms3 = Frame(Left, width=200, height=550)
 Forms3.pack(side=TOP)
-Buttons2 = Frame(Left, width=400, height=100, bd=1, relief=RAISED)
+Stat_bar = Frame(Left,width=200, height=10, bd=1, relief=SUNKEN)
+Stat_bar.pack(side=BOTTOM)
+Buttons2 = Frame(Left, width=200, height=100, bd=1, relief=RAISED)
 Buttons2.pack(side=BOTTOM)
-Buttons = Frame(Left, width=400, height=100, bd=1, relief=RAISED)
+Buttons = Frame(Left, width=200, height=100, bd=1, relief=RAISED)
 Buttons.pack(side=BOTTOM)
 
 # ================ LABELS & ENTRIES ================
@@ -69,24 +72,24 @@ number_lbl.grid(row=2)
 number_entry = Entry(Forms1, textvariable=number,font=font2,width=20)
 number_entry.grid(row=2,ipady=2,column=2)
 
-year_lbl = Label(Forms2,text="Year: ",font=font1)
+year_lbl = Label(Forms2,text="Year:",font=font1)
 year_lbl.pack(side=LEFT,padx=5,pady=5)
 year_entry = Entry(Forms2,font=font1,width=5,bd=2,textvariable=year)
 year_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-month_lbl = Label(Forms2,text="Month: ",font=font1)
+month_lbl = Label(Forms2,text="Month:",font=font1)
 month_lbl.pack(side=LEFT,padx=5,pady=5)
 month_entry = Entry(Forms2,font=font1,width=3,bd=2,textvariable=month)
 month_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-day_lbl = Label(Forms2,text="Day: ",font=font1)
+day_lbl = Label(Forms2,text="Day:",font=font1)
 day_lbl.pack(side=LEFT,padx=5,pady=5)
 day_entry = Entry(Forms2,font=font1,width=3,bd=2,textvariable=day)
 day_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-city_lbl = Label(Forms3, text="   City:   ", font=font1, bd=15)
+city_lbl = Label(Forms3, text="City:", font=font1, bd=15)
 city_lbl.grid(row=0)
-city_entry = Entry(Forms3, textvariable=city,font=font2,width=20)
+city_entry = Entry(Forms3, textvariable=city,font=font2,width=19)
 city_entry.grid(row=0,ipady=2,column=2)
 
 country_lbl = Label(Forms3, text="Country:", font=font1, bd=15)
@@ -96,7 +99,7 @@ country_entry.grid(row=1,ipady=2,column=2)
 
 habitat_lbl = Label(Forms3, text="Habitat:", font=font1, bd=15)
 habitat_lbl.grid(row=2)
-habitat_entry = Entry(Forms3, textvariable=country,font=font2,width=20)
+habitat_entry = Entry(Forms3, textvariable=habitat,font=font2,width=20)
 habitat_entry.grid(row=2,ipady=2,column=2)
 
 xcoord_lbl = Label(Forms3, text="X Coordinates:", font=font1, bd=15)
@@ -133,6 +136,11 @@ exit_btn = Button(Buttons2, width=10, text="About", command=DISABLED)
 exit_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 about_btn = Button(Buttons2, width=10, text="Exit", command=DISABLED)
 about_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
+
+# ================= STATUS BAR ===============
+stat_lbl = Label(Stat_bar, text=status, anchor=W)
+stat_lbl.pack(ipady=2,padx=5,pady=5)
+
 
 # ================ DATABASE VIEW ================
 scrollbary = Scrollbar(Right, orient=VERTICAL)
