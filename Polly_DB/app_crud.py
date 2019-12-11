@@ -12,7 +12,7 @@ def db_connect():
 def insert(species,lname,number,year,month,day,hour,city,country,habitat,xcoordinates,ycoordinates,notes,author):
     conn = sqlite3.connect('myPollyDB.db')
     cur = conn.cursor()
-    cur.execute("INSERT INTO birds VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(species,lname,number,year,month,day,hour,city,country,habitat,xcoordinates,ycoordinates,notes,author))
+    cur.execute("INSERT INTO birds VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(species,lname,number,year,month,day,hour,city,country,habitat,xcoordinates,ycoordinates,notes,author))
     conn.commit()
     conn.close()
 
@@ -22,6 +22,7 @@ def view():
     cur.execute("SELECT * FROM birds")
     rows = cur.fetchall()
     conn.close()
+    return rows
 
 def search(species="",lname="",number="",year="",month="",day="",hour="",city="",country="",habitat="",xcoordinates="",ycoordinates="",notes="",author=""):
     conn = sqlite3.connect('myPollyDB.db')

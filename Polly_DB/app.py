@@ -34,34 +34,34 @@ def get_selected_row(event):
         global selected_tuple
         index = list_all.curselection()[0]
         selected_tuple = list_all.get(index)
-        e1.delete(0,END)
-        e1.insert(END,selected_tuple[1])
-        e2.delete(0,END)
-        e2.insert(END,selected_tuple[2])
-        e3.delete(0,END)
-        e3.insert(END,selected_tuple[3])
-        e4.delete(0,END)
-        e4.insert(END,selected_tuple[4])
-        e5.delete(0,END)
-        e5.insert(END,selected_tuple[5])
-        e6.delete(0,END)
-        e6.insert(END,selected_tuple[6])
-        e7.delete(0,END)
-        e7.insert(END,selected_tuple[7])
-        e8.delete(0,END)
-        e8.insert(END,selected_tuple[8])
-        e9.delete(0,END)
-        e9.insert(END,selected_tuple[9])
-        e10.delete(0,END)
-        e10.insert(END,selected_tuple[10])
-        e11.delete(0,END)
-        e11.insert(END,selected_tuple[11])
-        e12.delete(0,END)
-        e12.insert(END,selected_tuple[12])
-        e13.delete(0,END)
-        e13.insert(END,selected_tuple[13])
-        e14.delete(0,END)
-        e14.insert(END,selected_tuple[14])
+        species_entry.delete(0,END)
+        species_entry.insert(END,selected_tuple[1])
+        lname_txt.delete(0,END)
+        lname_txt.insert(END,selected_tuple[2])
+        number_entry.delete(0,END)
+        number_entry.insert(END,selected_tuple[3])
+        year_entry.delete(0,END)
+        year_entry.insert(END,selected_tuple[4])
+        month_entry.delete(0,END)
+        month_entry.insert(END,selected_tuple[5])
+        day_entry.delete(0,END)
+        day_entry.insert(END,selected_tuple[6])
+        hour_entry.delete(0,END)
+        hour_entry.insert(END,selected_tuple[7])
+        city_entry.delete(0,END)
+        city_entry.insert(END,selected_tuple[8])
+        country_entry.delete(0,END)
+        country_entry.insert(END,selected_tuple[9])
+        habitat_entry.delete(0,END)
+        habitat_entry.insert(END,selected_tuple[10])
+        xcoord_entry.delete(0,END)
+        xcoord_entry.insert(END,selected_tuple[11])
+        ycoord_entry.delete(0,END)
+        ycoord_entry.insert(END,selected_tuple[12])
+        notes_entry.delete(0,END)
+        notes_entry.insert(END,selected_tuple[13])
+        habitat_entry.delete(0,END)
+        habitat_entry.insert(END,selected_tuple[14])
     except IndexError:
         pass
 
@@ -72,13 +72,13 @@ def view_command():
 
 def search_command():
     list_all.delete(0,END)
-    for row in app_crud.search(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()):
+    for row in app_crud.search(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()):
         list_all.insert(END,row)
 
 def add_command():
-    app_crud.insert(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
+    app_crud.insert(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),habitat_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
     list_all.delete(0,END)
-    list_all.insert(END,(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()))
+    list_all.insert(END,(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()))
     status.config(text="Data created!", fg="green")
 
 def delete_command():
@@ -87,7 +87,7 @@ def delete_command():
 
 
 def update_command():
-    app_crud.update(selected_tuple[0],species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
+    app_crud.update(selected_tuple[0],species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
     status.config(text="Data updated", fg="green")
 
 def about():
@@ -247,49 +247,62 @@ status = Label(Stat_bar)
 status.pack(ipady=2,padx=5,pady=5)
 status.config(text="Polly wants a cracker", fg="green")
 # ================ DATABASE VIEW ================
-scrollbary = Scrollbar(Right, orient=VERTICAL)
-scrollbarx = Scrollbar(Right, orient=HORIZONTAL)
-tree = tkk.Treeview(Right, columns=("Species", "Latin", 
-                                    "Count", "Year", "Month",
-                                    "Day","Hour", "City", "Country","Habitat",
-                                    "X Coord", "Y Coord", "Notes",
-                                    "Author"), selectmode="extended",
-                                    height=500, yscrollcommand=scrollbary.set,
-                                    xscrollcommand=scrollbarx.set)
-scrollbary.config(command=tree.yview)
-scrollbary.pack(side=RIGHT, fill=Y)
-scrollbarx.config(command=tree.xview)
-scrollbarx.pack(side=BOTTOM, fill=X)
-tree.heading('Species', text="Species", anchor=CENTER)
-tree.heading('Latin', text="Latin", anchor=CENTER)
-tree.heading('Count', text="Count", anchor=CENTER)
-tree.heading('Year', text="Year", anchor=CENTER)
-tree.heading('Month', text="Month", anchor=CENTER)
-tree.heading('Day', text="Day", anchor=CENTER)
-tree.heading('Hour', text="Hour", anchor=CENTER)
-tree.heading('City', text="City", anchor=CENTER)
-tree.heading('Country', text="Country", anchor=CENTER)
-tree.heading('Habitat', text="Habitat", anchor=CENTER)
-tree.heading('X Coord', text="X Coord", anchor=CENTER)
-tree.heading('Y Coord', text="Y Coord", anchor=CENTER)
-tree.heading('Notes', text="Notes", anchor=CENTER)
-tree.heading('Author', text="Author", anchor=CENTER)
-tree.column('#0', stretch=NO, minwidth=0, width=0)
-tree.column('#1', stretch=NO, minwidth=0, width=120)
-tree.column('#2', stretch=NO, minwidth=0, width=120)
-tree.column('#3', stretch=NO, minwidth=0, width=80)
-tree.column('#4', stretch=NO, minwidth=0, width=80)
-tree.column('#5', stretch=NO, minwidth=0, width=80)
-tree.column('#6', stretch=NO, minwidth=0, width=80)
-tree.column('#7', stretch=NO, minwidth=0, width=80)
-tree.column('#8', stretch=NO, minwidth=0, width=80)
-tree.column('#9', stretch=NO, minwidth=0, width=80)
-tree.column('#10', stretch=NO, minwidth=0, width=120)
-tree.column('#11', stretch=NO, minwidth=0, width=80)
-tree.column('#12', stretch=NO, minwidth=0, width=80)
-tree.column('#13', stretch=NO, minwidth=0, width=120)
-tree.column('#14', stretch=NO, minwidth=0, width=120)
-tree.pack()
+
+# contemporaty viewing option
+list_all=Listbox(Right, height=12,width=70)
+list_all.grid(row=2,column=0, rowspan=6,columnspan=2)
+sb1=Scrollbar(Right)
+sb1.grid(row=2,column=2,rowspan=6)
+
+list_all.configure(yscrollcommand=sb1.set)
+sb1.configure(command=list_all.yview)
+
+list_all.bind('<<ListboxSelect>>', get_selected_row)
+
+# integration co be continued >>>
+# scrollbary = Scrollbar(Right, orient=VERTICAL)
+# scrollbarx = Scrollbar(Right, orient=HORIZONTAL)
+# tree = tkk.Treeview(Right, columns=("Species", "Latin", 
+#                                     "Count", "Year", "Month",
+#                                     "Day","Hour", "City", "Country","Habitat",
+#                                     "X Coord", "Y Coord", "Notes",
+#                                     "Author"), selectmode="extended",
+#                                     height=500, yscrollcommand=scrollbary.set,
+#                                     xscrollcommand=scrollbarx.set)
+# scrollbary.config(command=tree.yview)
+# scrollbary.pack(side=RIGHT, fill=Y)
+# scrollbarx.config(command=tree.xview)
+# scrollbarx.pack(side=BOTTOM, fill=X)
+# tree.heading('Species', text="Species", anchor=CENTER)
+# tree.heading('Latin', text="Latin", anchor=CENTER)
+# tree.heading('Count', text="Count", anchor=CENTER)
+# tree.heading('Year', text="Year", anchor=CENTER)
+# tree.heading('Month', text="Month", anchor=CENTER)
+# tree.heading('Day', text="Day", anchor=CENTER)
+# tree.heading('Hour', text="Hour", anchor=CENTER)
+# tree.heading('City', text="City", anchor=CENTER)
+# tree.heading('Country', text="Country", anchor=CENTER)
+# tree.heading('Habitat', text="Habitat", anchor=CENTER)
+# tree.heading('X Coord', text="X Coord", anchor=CENTER)
+# tree.heading('Y Coord', text="Y Coord", anchor=CENTER)
+# tree.heading('Notes', text="Notes", anchor=CENTER)
+# tree.heading('Author', text="Author", anchor=CENTER)
+# tree.column('#0', stretch=NO, minwidth=0, width=0)
+# tree.column('#1', stretch=NO, minwidth=0, width=120)
+# tree.column('#2', stretch=NO, minwidth=0, width=120)
+# tree.column('#3', stretch=NO, minwidth=0, width=80)
+# tree.column('#4', stretch=NO, minwidth=0, width=80)
+# tree.column('#5', stretch=NO, minwidth=0, width=80)
+# tree.column('#6', stretch=NO, minwidth=0, width=80)
+# tree.column('#7', stretch=NO, minwidth=0, width=80)
+# tree.column('#8', stretch=NO, minwidth=0, width=80)
+# tree.column('#9', stretch=NO, minwidth=0, width=80)
+# tree.column('#10', stretch=NO, minwidth=0, width=120)
+# tree.column('#11', stretch=NO, minwidth=0, width=80)
+# tree.column('#12', stretch=NO, minwidth=0, width=80)
+# tree.column('#13', stretch=NO, minwidth=0, width=120)
+# tree.column('#14', stretch=NO, minwidth=0, width=120)
+# tree.pack()
 
 
 
