@@ -91,6 +91,7 @@ def update_command():
     status.config(text="Data updated", fg="green")
 
 def about():
+    status.config(text="I am an Norwegian Blue Parrot", fg="green")
     ttkMsBox.showinfo('About','''   Created by @kostyrko (GitHub)
                         \n(use under under the GPLv3 license)''')
 
@@ -235,16 +236,16 @@ update_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 delete_btn = Button(Buttons2, width=10, text="Delete",fg=white, bg=red, command=DISABLED)
 delete_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-exit_btn = Button(Buttons2, width=10, text="About",fg=white, bg=gray, command=exit)
+exit_btn = Button(Buttons2, width=10, text="About",fg=white, bg=gray, command=about)
 exit_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-about_btn = Button(Buttons2, width=10, text="Exit",fg=white, bg=gray, command=about)
+about_btn = Button(Buttons2, width=10, text="Exit",fg=white, bg=gray, command=exit)
 about_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 # ================= STATUS BAR ===============
 status = Label(Stat_bar)
 status.pack(ipady=2,padx=5,pady=5)
-
+status.config(text="Polly wants a cracker", fg="green")
 # ================ DATABASE VIEW ================
 scrollbary = Scrollbar(Right, orient=VERTICAL)
 scrollbarx = Scrollbar(Right, orient=HORIZONTAL)
