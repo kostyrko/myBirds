@@ -23,7 +23,7 @@ gold = 'goldenrod3'
 red = 'tomato3'
 sienna = 'sienna3'
 gray = 'dim gray'
-root.geometry('950x700')
+root.geometry('950x680')
 root.configure(bg=color1)
 root.resizable()
 
@@ -32,22 +32,24 @@ root.resizable()
 def get_selected_row(event):
     try:
         global selected_tuple
+        
         index = list_all.curselection()[0]
         selected_tuple = list_all.get(index)
+        print(selected_tuple)
         species_entry.delete(0,END)
         species_entry.insert(END,selected_tuple[1])
-        lname_txt.delete(0,END)
-        lname_txt.insert(END,selected_tuple[2])
-        number_entry.delete(0,END)
-        number_entry.insert(END,selected_tuple[3])
+        lname_entry.delete(0,END)
+        lname_entry.insert(END,selected_tuple[2])        
         year_entry.delete(0,END)
-        year_entry.insert(END,selected_tuple[4])
+        year_entry.insert(END,selected_tuple[3])
         month_entry.delete(0,END)
-        month_entry.insert(END,selected_tuple[5])
+        month_entry.insert(END,selected_tuple[4])
         day_entry.delete(0,END)
-        day_entry.insert(END,selected_tuple[6])
+        day_entry.insert(END,selected_tuple[5])
         hour_entry.delete(0,END)
-        hour_entry.insert(END,selected_tuple[7])
+        hour_entry.insert(END,selected_tuple[6])
+        number_entry.delete(0,END)
+        number_entry.insert(END,selected_tuple[7])
         city_entry.delete(0,END)
         city_entry.insert(END,selected_tuple[8])
         country_entry.delete(0,END)
@@ -60,8 +62,8 @@ def get_selected_row(event):
         ycoord_entry.insert(END,selected_tuple[12])
         notes_entry.delete(0,END)
         notes_entry.insert(END,selected_tuple[13])
-        habitat_entry.delete(0,END)
-        habitat_entry.insert(END,selected_tuple[14])
+        author_entry.delete(0,END)
+        author_entry.insert(END,selected_tuple[14])
     except IndexError:
         pass
 
@@ -70,20 +72,40 @@ def view_command():
     for row in app_crud.view():
         list_all.insert(END,row)
 
+def clear_command():
+    species_entry.delete(0,END)
+    lname_entry.delete(0,END)
+    number_entry.delete(0,END)
+    year_entry.delete(0,END)
+    month_entry.delete(0,END)
+    day_entry.delete(0,END)
+    hour_entry.delete(0,END)
+    city_entry.delete(0,END)
+    country_entry.delete(0,END)
+    habitat_entry.delete(0,END)
+    xcoord_entry.delete(0,END)
+    ycoord_entry.delete(0,END)
+    notes_entry.delete(0,END)
+    author_entry.delete(0,END)
+
+
 def search_command():
     list_all.delete(0,END)
-    for row in app_crud.search(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()):
+    for row in app_crud.search(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()):
         list_all.insert(END,row)
 
 def add_command():
-    app_crud.insert(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),habitat_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
+    app_crud.insert(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
     list_all.delete(0,END)
-    list_all.insert(END,(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()))
+    list_all.insert(END,(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()))
     status.config(text="Data created!", fg="green")
+
 
 def delete_command():
     app_crud.delete(selected_tuple[0])
+    list_all.insert(END,(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()))
     status.config(text="This bird is no more!", fg="red")
+
 
 
 def update_command():
@@ -133,6 +155,9 @@ Forms1.pack(side=TOP)
 Forms2 = Frame(Left, width=200, height=550)
 Forms2.pack(side=TOP)
 
+Forms2_1 = Frame(Left, width=200, height=550)
+Forms2_1.pack(side=TOP)
+
 Forms3 = Frame(Left, width=200, height=550)
 Forms3.pack(side=TOP)
 
@@ -155,15 +180,10 @@ species_lbl.grid(row=0)
 species_entry = Entry(Forms1, textvariable=species_txt,font=font2,width=18)
 species_entry.grid(row=0,ipady=2,column=2)
 
-latin_lbl = Label(Forms1, text="Latin name:", font=font1, bd=15)
-latin_lbl.grid(row=1)
-latin_entry = Entry(Forms1, textvariable=lname_txt,font=font2,width=18)
-latin_entry.grid(row=1,ipady=2,column=2)
-
-number_lbl = Label(Forms1, text="Number/Count:", font=font1, bd=15)
-number_lbl.grid(row=2)
-number_entry = Entry(Forms1, textvariable=number_txt,font=font2,width=18)
-number_entry.grid(row=2,ipady=2,column=2)
+lname_lbl = Label(Forms1, text="Latin name:", font=font1, bd=15)
+lname_lbl.grid(row=1)
+lname_entry = Entry(Forms1, textvariable=lname_txt,font=font2,width=18)
+lname_entry.grid(row=1,ipady=2,column=2)
 
 year_lbl = Label(Forms2,text="Year:",font=font1)
 year_lbl.pack(side=LEFT,padx=5,pady=5)
@@ -172,7 +192,7 @@ year_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 month_lbl = Label(Forms2,text="Month:",font=font1)
 month_lbl.pack(side=LEFT,padx=5,pady=5)
-month_entry = Entry(Forms2,textvariable=year_txt,font=font1,width=3,bd=2)
+month_entry = Entry(Forms2,textvariable=month_txt,font=font1,width=3,bd=2)
 month_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 day_lbl = Label(Forms2,text="Day:",font=font1)
@@ -180,10 +200,15 @@ day_lbl.pack(side=LEFT,padx=5,pady=5)
 day_entry = Entry(Forms2,textvariable=day_txt,font=font1,width=3,bd=2)
 day_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-hour_lbl = Label(Forms3, text="Hour:",font=font1)
-hour_lbl.grid(row=0)
-hour_entry = Entry(Forms3,textvariable=hour_txt,font=font2,width=3,bd=2)
-hour_entry.grid(row=0,ipady=2,pady=5,column=2)
+hour_lbl = Label(Forms2_1,text="Hour:",font=font1)
+hour_lbl.pack(side=LEFT,padx=5,pady=5)
+hour_entry = Entry(Forms2_1,textvariable=hour_txt,font=font1,width=5,bd=2)
+hour_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
+
+number_lbl = Label(Forms2_1,text="Number:",font=font1)
+number_lbl.pack(side=LEFT,padx=5,pady=5)
+number_entry = Entry(Forms2_1,textvariable=number_txt,font=font1,width=3,bd=2)
+number_entry.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 city_lbl = Label(Forms3, text="City:", font=font1, bd=15)
 city_lbl.grid(row=1)
@@ -221,7 +246,10 @@ author_entry = Entry(Forms3, textvariable=author_txt,font=font2,width=18)
 author_entry.grid(row=7,ipady=2,column=2)
 
 # ================ BUTTONS ================
-create_btn = Button(Buttons, width=10, text="View All", bg=white, command=view_command)
+create_btn = Button(Buttons, width=15, text="View All/Refresh", bg=white, command=view_command)
+create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
+
+create_btn = Button(Buttons, width=15, text="Clear Entries", bg=white, command=clear_command)
 create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 create_btn = Button(Buttons1, width=10, text="Create/Add", bg=dgreen, command=add_command)
@@ -230,10 +258,10 @@ create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 read_btn = Button(Buttons1, width=10, text="Search Entry",bg=sblue, command=DISABLED)
 read_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-update_btn = Button(Buttons1, width=10, text="Update", bg= gold, command=DISABLED)
+update_btn = Button(Buttons1, width=10, text="Update", bg= gold, command=update_command)
 update_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-delete_btn = Button(Buttons2, width=10, text="Delete",fg=white, bg=red, command=DISABLED)
+delete_btn = Button(Buttons2, width=10, text="Delete",fg=white, bg=red, command=delete_command)
 delete_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 exit_btn = Button(Buttons2, width=10, text="About",fg=white, bg=gray, command=about)
