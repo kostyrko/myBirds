@@ -11,7 +11,7 @@ import app_crud
 # ================ SETTINGS ================
 
 root = Tk()
-root.title("PollyDB v. 0.9.3 (MyBirdsDB)")
+root.title("PollyDB v. 0.9.4 (MyBirdsDB)")
 color1 = 'gray77'
 color2 = 'gray60'
 font1 = 'arial', 11
@@ -23,9 +23,9 @@ gold = 'goldenrod3'
 red = 'tomato3'
 sienna = 'sienna3'
 gray = 'dim gray'
-root.geometry('950x680')
+root.geometry('860x680')
 root.configure(bg=color1)
-root.resizable()
+root.resizable(0,0)
 
 # ================ METHODS ================
 
@@ -35,7 +35,6 @@ def get_selected_row(event):
         
         index = list_all.curselection()[0]
         selected_tuple = list_all.get(index)
-        print(selected_tuple)
         species_entry.delete(0,END)
         species_entry.insert(END,selected_tuple[1])
         lname_entry.delete(0,END)
@@ -88,7 +87,6 @@ def clear_command():
     notes_entry.delete(0,END)
     author_entry.delete(0,END)
 
-
 def search_command():
     list_all.delete(0,END)
     for row in app_crud.search(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()):
@@ -99,13 +97,13 @@ def add_command():
     list_all.delete(0,END)
     list_all.insert(END,(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()))
     status.config(text="Data created!", fg="green")
+    view_command()
 
 
 def delete_command():
     app_crud.delete(selected_tuple[0])
-    list_all.insert(END,(species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()))
     status.config(text="This bird is no more!", fg="red")
-
+    view_command()
 
 
 def update_command():
@@ -146,7 +144,7 @@ author_txt = StringVar()
 Left = Frame(root, width=400, height=300,)
 Left.pack(side=LEFT, fill=BOTH)
 
-Right = Frame(root, width=1200, height=800, bd=8, relief=RAISED)
+Right = Frame(root, width=100, height=100, bd=8, relief=RAISED)
 Right.pack(side=LEFT)
 
 Forms1 = Frame(Left, width=200, height=550)
@@ -277,7 +275,7 @@ status.config(text="Polly wants a cracker", fg="green")
 # ================ DATABASE VIEW ================
 
 # contemporaty viewing option
-list_all=Listbox(Right, height=12,width=70)
+list_all=Listbox(Right, height=55,width=70)
 list_all.grid(row=2,column=0, rowspan=6,columnspan=2)
 sb1=Scrollbar(Right)
 sb1.grid(row=2,column=2,rowspan=6)
