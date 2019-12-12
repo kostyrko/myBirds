@@ -42,7 +42,7 @@ def delete(id):
 def update(id,species,lname,year,month,day,hour,number,city,country,habitat,xcoordinates,ycoordinates,notes,author):
     conn = sqlite3.connect('myPollyDB.db')
     cur = conn.cursor()
-    cur.execute("UPDATE birds SET species=?,lname=?,year=?,month=?,day=?,hour=?,number=?,city=?,country=?,habitat=?,xcoordinates=?,ycoordinates=?,notes=?,author=? WHERE id=?",(species,lname,number,year,month,day,hour,city,country,habitat,xcoordinates,ycoordinates,notes,author,id))
+    cur.execute("UPDATE birds SET species=?,lname=?,year=?,month=?,day=?,hour=?,number=?,city=?,country=?,habitat=?,xcoordinates=?,ycoordinates=?,notes=?,author=? WHERE id=?",(species,lname,year,month,day,hour,number,city,country,habitat,xcoordinates,ycoordinates,notes,author,id))
     conn.commit() 
     conn.close()
 

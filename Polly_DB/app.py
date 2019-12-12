@@ -23,7 +23,7 @@ gold = 'goldenrod3'
 red = 'tomato3'
 sienna = 'sienna3'
 gray = 'dim gray'
-root.geometry('860x680')
+root.geometry('1000x680')
 root.configure(bg=color1)
 root.resizable(0,0)
 
@@ -35,20 +35,28 @@ def get_selected_row(event):
         
         index = list_all.curselection()[0]
         selected_tuple = list_all.get(index)
+        
         species_entry.delete(0,END)
         species_entry.insert(END,selected_tuple[1])
+        
         lname_entry.delete(0,END)
-        lname_entry.insert(END,selected_tuple[2])        
+        lname_entry.insert(END,selected_tuple[2])
+
         year_entry.delete(0,END)
         year_entry.insert(END,selected_tuple[3])
+        
         month_entry.delete(0,END)
         month_entry.insert(END,selected_tuple[4])
+        
         day_entry.delete(0,END)
         day_entry.insert(END,selected_tuple[5])
+        
         hour_entry.delete(0,END)
         hour_entry.insert(END,selected_tuple[6])
+        
         number_entry.delete(0,END)
         number_entry.insert(END,selected_tuple[7])
+        
         city_entry.delete(0,END)
         city_entry.insert(END,selected_tuple[8])
         country_entry.delete(0,END)
@@ -74,11 +82,11 @@ def view_command():
 def clear_command():
     species_entry.delete(0,END)
     lname_entry.delete(0,END)
-    number_entry.delete(0,END)
     year_entry.delete(0,END)
     month_entry.delete(0,END)
     day_entry.delete(0,END)
     hour_entry.delete(0,END)
+    number_entry.delete(0,END)
     city_entry.delete(0,END)
     country_entry.delete(0,END)
     habitat_entry.delete(0,END)
@@ -99,16 +107,15 @@ def add_command():
     status.config(text="Data created!", fg="green")
     view_command()
 
-
 def delete_command():
     app_crud.delete(selected_tuple[0])
     status.config(text="This bird is no more!", fg="red")
     view_command()
 
-
 def update_command():
-    app_crud.update(selected_tuple[0],species_txt.get(),lname_txt.get(),number_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
+    app_crud.update(selected_tuple[0],species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
     status.config(text="Data updated", fg="green")
+    view_command()
 
 def about():
     status.config(text="I am an Norwegian Blue Parrot", fg="green")
@@ -125,11 +132,11 @@ def exit():
 # ================ VARIABLES ================
 species_txt = StringVar()
 lname_txt = StringVar()
-number_txt = IntVar()
 year_txt = IntVar()
 month_txt = IntVar()
 day_txt = IntVar()
 hour_txt = IntVar()
+number_txt = IntVar()
 city_txt = StringVar()
 country_txt = StringVar()
 habitat_txt = StringVar()
@@ -253,7 +260,7 @@ create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 create_btn = Button(Buttons1, width=10, text="Create/Add", bg=dgreen, command=add_command)
 create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-read_btn = Button(Buttons1, width=10, text="Search Entry",bg=sblue, command=DISABLED)
+read_btn = Button(Buttons1, width=10, text="Search Entry",bg=sblue, command=search_command)
 read_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 update_btn = Button(Buttons1, width=10, text="Update", bg= gold, command=update_command)
@@ -275,7 +282,7 @@ status.config(text="Polly wants a cracker", fg="green")
 # ================ DATABASE VIEW ================
 
 # contemporaty viewing option
-list_all=Listbox(Right, height=55,width=70)
+list_all=Listbox(Right, font=font1, height=41,width=70)
 list_all.grid(row=2,column=0, rowspan=6,columnspan=2)
 sb1=Scrollbar(Right)
 sb1.grid(row=2,column=2,rowspan=6)
