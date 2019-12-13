@@ -11,7 +11,7 @@ import app_crud
 # ================ SETTINGS ================
 
 root = Tk()
-root.title("PollyDB v. 0.9.4 (MyBirdsDB)")
+root.title("PollyDB v. 1.0 (MyBirdsDB)")
 color1 = 'gray77'
 color2 = 'gray60'
 font1 = 'arial', 11
@@ -23,7 +23,7 @@ gold = 'goldenrod3'
 red = 'tomato3'
 sienna = 'sienna3'
 gray = 'dim gray'
-root.geometry('1000x680')
+root.geometry('890x680')
 root.configure(bg=color1)
 root.resizable(0,0)
 
@@ -32,31 +32,22 @@ root.resizable(0,0)
 def get_selected_row(event):
     try:
         global selected_tuple
-        
         index = list_all.curselection()[0]
         selected_tuple = list_all.get(index)
-        
         species_entry.delete(0,END)
         species_entry.insert(END,selected_tuple[1])
-        
         lname_entry.delete(0,END)
         lname_entry.insert(END,selected_tuple[2])
-
         year_entry.delete(0,END)
         year_entry.insert(END,selected_tuple[3])
-        
         month_entry.delete(0,END)
         month_entry.insert(END,selected_tuple[4])
-        
         day_entry.delete(0,END)
         day_entry.insert(END,selected_tuple[5])
-        
         hour_entry.delete(0,END)
         hour_entry.insert(END,selected_tuple[6])
-        
         number_entry.delete(0,END)
         number_entry.insert(END,selected_tuple[7])
-        
         city_entry.delete(0,END)
         city_entry.insert(END,selected_tuple[8])
         country_entry.delete(0,END)
@@ -94,11 +85,17 @@ def clear_command():
     ycoord_entry.delete(0,END)
     notes_entry.delete(0,END)
     author_entry.delete(0,END)
+    status.config(text="Polly wants a cracker", fg="orange")
 
 def search_command():
     list_all.delete(0,END)
-    for row in app_crud.search(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get()):
-        list_all.insert(END,row)
+    rows  = app_crud.search(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
+    if rows == []:
+        status.config(text="Entry NOT found!", fg="red")
+    else:
+        for row in rows:
+            list_all.insert(END,row)
+            status.config(text="Entry found!", fg="green")
 
 def add_command():
     app_crud.insert(species_txt.get(),lname_txt.get(),year_txt.get(),month_txt.get(),day_txt.get(),hour_txt.get(),number_txt.get(),city_txt.get(),country_txt.get(),habitat_txt.get(),xcoordinates_txt.get(),ycoordinates_txt.get(),notes_txt.get(),author_txt.get())
@@ -118,7 +115,7 @@ def update_command():
     view_command()
 
 def about():
-    status.config(text="I am an Norwegian Blue Parrot", fg="green")
+    status.config(text="I am an Norwegian Blue Parrot", fg="blue")
     ttkMsBox.showinfo('About','''   Created by @kostyrko (GitHub)
                         \n(use under under the GPLv3 license)''')
 
@@ -132,16 +129,16 @@ def exit():
 # ================ VARIABLES ================
 species_txt = StringVar()
 lname_txt = StringVar()
-year_txt = IntVar()
-month_txt = IntVar()
-day_txt = IntVar()
-hour_txt = IntVar()
-number_txt = IntVar()
+year_txt = StringVar()
+month_txt = StringVar()
+day_txt = StringVar()
+hour_txt = StringVar()
+number_txt = StringVar()
 city_txt = StringVar()
 country_txt = StringVar()
 habitat_txt = StringVar()
-xcoordinates_txt = IntVar()
-ycoordinates_txt = IntVar()
+xcoordinates_txt = StringVar()
+ycoordinates_txt = StringVar()
 notes_txt = StringVar()
 author_txt = StringVar()
 
@@ -251,13 +248,13 @@ author_entry = Entry(Forms3, textvariable=author_txt,font=font2,width=18)
 author_entry.grid(row=7,ipady=2,column=2)
 
 # ================ BUTTONS ================
-create_btn = Button(Buttons, width=15, text="View All/Refresh", bg=white, command=view_command)
+create_btn = Button(Buttons, width=15, text="View All", bg=white, command=view_command)
 create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 create_btn = Button(Buttons, width=15, text="Clear Entries", bg=white, command=clear_command)
 create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
-create_btn = Button(Buttons1, width=10, text="Create/Add", bg=dgreen, command=add_command)
+create_btn = Button(Buttons1, width=10, text="Add Data", bg=dgreen, command=add_command)
 create_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 read_btn = Button(Buttons1, width=10, text="Search Entry",bg=sblue, command=search_command)
@@ -276,12 +273,12 @@ about_btn = Button(Buttons2, width=10, text="Exit",fg=white, bg=gray, command=ex
 about_btn.pack(side=LEFT,ipady=2,padx=5,pady=5)
 
 # ================= STATUS BAR ===============
+
 status = Label(Stat_bar)
 status.pack(ipady=2,padx=5,pady=5)
-status.config(text="Polly wants a cracker", fg="green")
-# ================ DATABASE VIEW ================
 
-# contemporaty viewing option
+# ================ DATABASE VIEW -> Listbox ================
+
 list_all=Listbox(Right, font=font1, height=41,width=70)
 list_all.grid(row=2,column=0, rowspan=6,columnspan=2)
 sb1=Scrollbar(Right)
@@ -292,54 +289,8 @@ sb1.configure(command=list_all.yview)
 
 list_all.bind('<<ListboxSelect>>', get_selected_row)
 
-# integration co be continued >>>
-# scrollbary = Scrollbar(Right, orient=VERTICAL)
-# scrollbarx = Scrollbar(Right, orient=HORIZONTAL)
-# tree = tkk.Treeview(Right, columns=("Species", "Latin", 
-#                                     "Count", "Year", "Month",
-#                                     "Day","Hour", "City", "Country","Habitat",
-#                                     "X Coord", "Y Coord", "Notes",
-#                                     "Author"), selectmode="extended",
-#                                     height=500, yscrollcommand=scrollbary.set,
-#                                     xscrollcommand=scrollbarx.set)
-# scrollbary.config(command=tree.yview)
-# scrollbary.pack(side=RIGHT, fill=Y)
-# scrollbarx.config(command=tree.xview)
-# scrollbarx.pack(side=BOTTOM, fill=X)
-# tree.heading('Species', text="Species", anchor=CENTER)
-# tree.heading('Latin', text="Latin", anchor=CENTER)
-# tree.heading('Count', text="Count", anchor=CENTER)
-# tree.heading('Year', text="Year", anchor=CENTER)
-# tree.heading('Month', text="Month", anchor=CENTER)
-# tree.heading('Day', text="Day", anchor=CENTER)
-# tree.heading('Hour', text="Hour", anchor=CENTER)
-# tree.heading('City', text="City", anchor=CENTER)
-# tree.heading('Country', text="Country", anchor=CENTER)
-# tree.heading('Habitat', text="Habitat", anchor=CENTER)
-# tree.heading('X Coord', text="X Coord", anchor=CENTER)
-# tree.heading('Y Coord', text="Y Coord", anchor=CENTER)
-# tree.heading('Notes', text="Notes", anchor=CENTER)
-# tree.heading('Author', text="Author", anchor=CENTER)
-# tree.column('#0', stretch=NO, minwidth=0, width=0)
-# tree.column('#1', stretch=NO, minwidth=0, width=120)
-# tree.column('#2', stretch=NO, minwidth=0, width=120)
-# tree.column('#3', stretch=NO, minwidth=0, width=80)
-# tree.column('#4', stretch=NO, minwidth=0, width=80)
-# tree.column('#5', stretch=NO, minwidth=0, width=80)
-# tree.column('#6', stretch=NO, minwidth=0, width=80)
-# tree.column('#7', stretch=NO, minwidth=0, width=80)
-# tree.column('#8', stretch=NO, minwidth=0, width=80)
-# tree.column('#9', stretch=NO, minwidth=0, width=80)
-# tree.column('#10', stretch=NO, minwidth=0, width=120)
-# tree.column('#11', stretch=NO, minwidth=0, width=80)
-# tree.column('#12', stretch=NO, minwidth=0, width=80)
-# tree.column('#13', stretch=NO, minwidth=0, width=120)
-# tree.column('#14', stretch=NO, minwidth=0, width=120)
-# tree.pack()
-
-
-
-
 # ================ RESULT ================
+view_command()
+status.config(text="Connection with database established", fg="green")
 if __name__ == '__main__':
     root.mainloop()

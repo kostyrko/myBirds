@@ -4,7 +4,7 @@ import sqlite3
 def db_connect():
     conn = sqlite3.connect('myPollyDB.db')
     cur = conn.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS `birds` (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, species TEXT, lname TINYTEXT, year CHAR(4), month CHAR(2), day CHAR(2), hour CHAR(2),number CHAR(6), city TINYTEXT, country TINYTEXT, habitat TINYTEXT, xcoordinates CHAR(10), ycoordinates CHAR(10), notes TINYTEXT, author TINYTEXT)")
+    cur.execute("CREATE TABLE IF NOT EXISTS `birds` (id INTEGER PRIMARY KEY, species text, lname text, year integer, month integer, day integer, hour integer,number integer, city text, country text, habitat text, xcoordinates integer, ycoordinates integer, notes text, author text)")
     conn.commit()
     conn.close()
 
@@ -24,10 +24,10 @@ def view():
     conn.close()
     return rows
 
-def search(species="",lname="",year="",month="",day="",hour="",number="",city="",country="",habitat="",xcoordinates="",ycoordinates="",notes="",author=""):
+def search(species='',lname='',year='',month='',day='',hour='',number='',city='',country='',habitat='',xcoordinates='',ycoordinates='',notes='',author=''):
     conn = sqlite3.connect('myPollyDB.db')
     cur = conn.cursor()
-    cur.execute("SELECT * FROM birds WHERE species=? OR lname=? OR year=? OR month=? OR day=? OR hour=? OR number=? OR city=? OR country=? OR habitat=? OR xcoordinates=? OR ycoordinates=? OR notes=? OR author=?")
+    cur.execute("SELECT * FROM birds WHERE species=? OR lname=? OR year=? OR month=? OR day=? OR hour=? OR number=? OR city=? OR country=? OR habitat=? OR xcoordinates=? OR ycoordinates=? OR notes=? OR author=?",(species,lname,year,month,day,hour,number,city,country,habitat,xcoordinates,ycoordinates,notes,author))
     rows=cur.fetchall()
     conn.close()
     return rows
