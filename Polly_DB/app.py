@@ -11,7 +11,7 @@ import app_crud
 # ================ SETTINGS ================
 
 root = Tk()
-root.title("PollyDB v. 1.0 (MyBirdsDB)")
+root.title("PollyDB v. 1.0.1 (MyBirdsDB)")
 color1 = 'gray77'
 color2 = 'gray60'
 font1 = 'arial', 11
@@ -25,7 +25,7 @@ sienna = 'sienna3'
 gray = 'dim gray'
 root.geometry('890x680')
 root.configure(bg=color1)
-root.resizable(0,0)
+root.resizable()
 
 # ================ METHODS ================
 
@@ -148,8 +148,8 @@ author_txt = StringVar()
 Left = Frame(root, width=400, height=300,)
 Left.pack(side=LEFT, fill=BOTH)
 
-Right = Frame(root, width=100, height=100, bd=8, relief=RAISED)
-Right.pack(side=LEFT)
+Right = Frame(root, bd=4, relief=RAISED)
+Right.pack(fill=BOTH,expand=True,side=LEFT)
 
 Forms1 = Frame(Left, width=200, height=550)
 Forms1.pack(side=TOP)
@@ -278,16 +278,61 @@ status = Label(Stat_bar)
 status.pack(ipady=2,padx=5,pady=5)
 
 # ================ DATABASE VIEW -> Listbox ================
-
-list_all=Listbox(Right, font=font1, height=41,width=70)
-list_all.grid(row=2,column=0, rowspan=6,columnspan=2)
-sb1=Scrollbar(Right)
-sb1.grid(row=2,column=2,rowspan=6)
-
-list_all.configure(yscrollcommand=sb1.set)
-sb1.configure(command=list_all.yview)
-
+scr_bar1 = Scrollbar(Right)
+scr_bar1.pack(side=RIGHT,fill=Y)
+scr_bar2 = Scrollbar(Right,orient=HORIZONTAL)
+scr_bar2.pack(side=BOTTOM,fill=X)
+list_all=Listbox(Right, font=font1,yscrollcommand=scr_bar1.set,xscrollcommand=scr_bar2.set)
+list_all.pack(fill=BOTH,expand=True)
+scr_bar1.config(command=list_all.yview)
+scr_bar2.config(command=list_all.xview )
 list_all.bind('<<ListboxSelect>>', get_selected_row)
+
+# integration co be continued >>>
+# scrollbary = Scrollbar(Right, orient=VERTICAL)
+# scrollbarx = Scrollbar(Right, orient=HORIZONTAL)
+# tree = tkk.Treeview(Right, columns=("Species", "Latin", 
+#                                     "Count", "Year", "Month",
+#                                     "Day","Hour", "City", "Country","Habitat",
+#                                     "X Coord", "Y Coord", "Notes",
+#                                     "Author"), selectmode="extended",
+#                                     height=500, yscrollcommand=scrollbary.set,
+#                                     xscrollcommand=scrollbarx.set)
+# scrollbary.config(command=tree.yview)
+# scrollbary.pack(side=RIGHT, fill=Y)
+# scrollbarx.config(command=tree.xview)
+# scrollbarx.pack(side=BOTTOM, fill=X)
+# tree.heading('Species', text="Species", anchor=CENTER)
+# tree.heading('Latin', text="Latin", anchor=CENTER)
+# tree.heading('Count', text="Count", anchor=CENTER)
+# tree.heading('Year', text="Year", anchor=CENTER)
+# tree.heading('Month', text="Month", anchor=CENTER)
+# tree.heading('Day', text="Day", anchor=CENTER)
+# tree.heading('Hour', text="Hour", anchor=CENTER)
+# tree.heading('City', text="City", anchor=CENTER)
+# tree.heading('Country', text="Country", anchor=CENTER)
+# tree.heading('Habitat', text="Habitat", anchor=CENTER)
+# tree.heading('X Coord', text="X Coord", anchor=CENTER)
+# tree.heading('Y Coord', text="Y Coord", anchor=CENTER)
+# tree.heading('Notes', text="Notes", anchor=CENTER)
+# tree.heading('Author', text="Author", anchor=CENTER)
+# tree.column('#0', stretch=NO, minwidth=0, width=0)
+# tree.column('#1', stretch=NO, minwidth=0, width=120)
+# tree.column('#2', stretch=NO, minwidth=0, width=120)
+# tree.column('#3', stretch=NO, minwidth=0, width=80)
+# tree.column('#4', stretch=NO, minwidth=0, width=80)
+# tree.column('#5', stretch=NO, minwidth=0, width=80)
+# tree.column('#6', stretch=NO, minwidth=0, width=80)
+# tree.column('#7', stretch=NO, minwidth=0, width=80)
+# tree.column('#8', stretch=NO, minwidth=0, width=80)
+# tree.column('#9', stretch=NO, minwidth=0, width=80)
+# tree.column('#10', stretch=NO, minwidth=0, width=120)
+# tree.column('#11', stretch=NO, minwidth=0, width=80)
+# tree.column('#12', stretch=NO, minwidth=0, width=80)
+# tree.column('#13', stretch=NO, minwidth=0, width=120)
+# tree.column('#14', stretch=NO, minwidth=0, width=120)
+# tree.pack()
+
 
 # ================ RESULT ================
 view_command()
