@@ -288,52 +288,6 @@ scr_bar1.config(command=list_all.yview)
 scr_bar2.config(command=list_all.xview )
 list_all.bind('<<ListboxSelect>>', get_selected_row)
 
-# integration co be continued >>>
-# scrollbary = Scrollbar(Right, orient=VERTICAL)
-# scrollbarx = Scrollbar(Right, orient=HORIZONTAL)
-# tree = tkk.Treeview(Right, columns=("Species", "Latin", 
-#                                     "Count", "Year", "Month",
-#                                     "Day","Hour", "City", "Country","Habitat",
-#                                     "X Coord", "Y Coord", "Notes",
-#                                     "Author"), selectmode="extended",
-#                                     height=500, yscrollcommand=scrollbary.set,
-#                                     xscrollcommand=scrollbarx.set)
-# scrollbary.config(command=tree.yview)
-# scrollbary.pack(side=RIGHT, fill=Y)
-# scrollbarx.config(command=tree.xview)
-# scrollbarx.pack(side=BOTTOM, fill=X)
-# tree.heading('Species', text="Species", anchor=CENTER)
-# tree.heading('Latin', text="Latin", anchor=CENTER)
-# tree.heading('Count', text="Count", anchor=CENTER)
-# tree.heading('Year', text="Year", anchor=CENTER)
-# tree.heading('Month', text="Month", anchor=CENTER)
-# tree.heading('Day', text="Day", anchor=CENTER)
-# tree.heading('Hour', text="Hour", anchor=CENTER)
-# tree.heading('City', text="City", anchor=CENTER)
-# tree.heading('Country', text="Country", anchor=CENTER)
-# tree.heading('Habitat', text="Habitat", anchor=CENTER)
-# tree.heading('X Coord', text="X Coord", anchor=CENTER)
-# tree.heading('Y Coord', text="Y Coord", anchor=CENTER)
-# tree.heading('Notes', text="Notes", anchor=CENTER)
-# tree.heading('Author', text="Author", anchor=CENTER)
-# tree.column('#0', stretch=NO, minwidth=0, width=0)
-# tree.column('#1', stretch=NO, minwidth=0, width=120)
-# tree.column('#2', stretch=NO, minwidth=0, width=120)
-# tree.column('#3', stretch=NO, minwidth=0, width=80)
-# tree.column('#4', stretch=NO, minwidth=0, width=80)
-# tree.column('#5', stretch=NO, minwidth=0, width=80)
-# tree.column('#6', stretch=NO, minwidth=0, width=80)
-# tree.column('#7', stretch=NO, minwidth=0, width=80)
-# tree.column('#8', stretch=NO, minwidth=0, width=80)
-# tree.column('#9', stretch=NO, minwidth=0, width=80)
-# tree.column('#10', stretch=NO, minwidth=0, width=120)
-# tree.column('#11', stretch=NO, minwidth=0, width=80)
-# tree.column('#12', stretch=NO, minwidth=0, width=80)
-# tree.column('#13', stretch=NO, minwidth=0, width=120)
-# tree.column('#14', stretch=NO, minwidth=0, width=120)
-# tree.pack()
-
-
 # ================ RESULT ================
 view_command()
 status.config(text="Connection with database established", fg="green")
